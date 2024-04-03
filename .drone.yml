@@ -227,6 +227,23 @@ steps:
     event:
       - tag
 
+- name: helm-publish
+  image: otwld/drone-chart-releaser-github-pages
+  settings:
+    cr_token:
+      from_secret: github_token
+    skip_existing: true
+    chart_dir: /helm/system-upgrade-contoller
+    root_package: true
+  when:
+    instance:
+      - drone-publish.rancher.io
+    ref:
+      - refs/head/master
+      - refs/tags/*
+    event:
+      - tag
+
 depends_on:
 - amd64
 - arm64
